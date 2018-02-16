@@ -38,7 +38,7 @@ func TestSafeSliceRemove(t *testing.T) {
 	if !got.Compare(exp) {
 		t.Errorf("given %s expected %s got %s", given, exp, got)
 	}
-	expStr := "[ who knows that kevin the great rules the city ]"
+	expStr := "[ \"who\" \"knows\" \"that\" \"kevin\" \"the\" \"great\" \"rules\" \"the\" \"city\" ]"
 	given = NewSafeSlice(
 		NewStringItem("who"),
 		NewStringItem("knows"),

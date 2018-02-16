@@ -1,27 +1,14 @@
 package slices
 
-import "sync"
-
 type MaxSlice struct {
 	*SafeSlice
 	max int
 }
 
-func NewMaxSlice(max int, items ...IItem) ISlice {
-	if i := len(items) - max; i > 0 {
-		items = items[i:]
-	}
-	if v, ok := NewSafeSlice(items...).(*SafeSlice); ok {
-		return &MaxSlice{
-			SafeSlice: v,
-			max:       max,
-		}
-	}
+func NewMaxSlice(max int, items ...IItem) *MaxSlice {
 	return &MaxSlice{
-		SafeSlice: &SafeSlice{
-			lock: sync.RWMutex{},
-		},
-		max: max,
+		SafeSlice: NewSafeSlice(items...),
+		max:       max,
 	}
 }
 

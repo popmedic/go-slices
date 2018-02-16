@@ -10,9 +10,10 @@ type SafeSlice struct {
 	lock  sync.RWMutex
 }
 
-func NewSafeSlice(items ...IItem) ISlice {
+func NewSafeSlice(items ...IItem) *SafeSlice {
 	n := &SafeSlice{lock: sync.RWMutex{}}
-	return n.Add(items...)
+	n.Add(items...)
+	return n
 }
 
 func (ss *SafeSlice) Add(items ...IItem) ISlice {
@@ -118,7 +119,7 @@ func (ss *SafeSlice) String() string {
 	items := ss.All()
 	n := "["
 	for _, i := range items {
-		n = fmt.Sprintf("%s %s", n, i)
+		n = fmt.Sprintf("%s %q", n, i)
 	}
 	return n + " ]"
 }
