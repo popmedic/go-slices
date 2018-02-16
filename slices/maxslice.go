@@ -6,9 +6,19 @@ type MaxSlice struct {
 }
 
 func NewMaxSlice(max int, items ...IItem) *MaxSlice {
+	ss := newMaxSafeSlice(max, items...)
+
 	return &MaxSlice{
-		SafeSlice: NewSafeSlice(items...),
+		SafeSlice: ss,
 		max:       max,
+	}
+}
+
+func newMaxSafeSlice(max int, items ...IItem) *SafeSlice {
+	if i := len(items) - max; i > 0 {
+		return NewSafeSlice(items[i:]...)
+	} else {
+		return NewSafeSlice(items...)
 	}
 }
 
@@ -19,4 +29,8 @@ func (ms *MaxSlice) Add(items ...IItem) ISlice {
 		ms.SafeSlice.lock.Unlock()
 	}
 	return ms.SafeSlice.Add(items...)
+}
+
+func (ms *MaxSlice) SetMax(max int) {
+	ms.SafeSlice = newMaxSafeSlice(max, ms.SafeSlice.All()...)
 }

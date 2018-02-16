@@ -117,4 +117,16 @@ func TestMaxSlice(t *testing.T) {
 	if got.Compare(given) {
 		t.Errorf("given %q expected %q got %q", given, exp, got)
 	}
+	exp = NewMaxSlice(
+		5,
+		NewStringItem("rules"),
+		NewStringItem("the"),
+		NewStringItem("city"),
+		NewStringItem("who"),
+		NewStringItem("knows"),
+	)
+	got.SetMax(5)
+	if !got.Compare(exp) {
+		t.Errorf("expected %q got %q", exp, got)
+	}
 }
