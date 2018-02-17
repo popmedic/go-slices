@@ -34,3 +34,7 @@ func (ms *MaxSlice) Add(items ...IItem) ISlice {
 func (ms *MaxSlice) SetMax(max int) {
 	ms.SafeSlice = newMaxSafeSlice(max, ms.SafeSlice.All()...)
 }
+
+func (ms *MaxSlice) GetMax() int {
+	return ms.max
+}
